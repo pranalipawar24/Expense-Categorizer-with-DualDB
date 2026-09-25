@@ -1,0 +1,13 @@
+description,merchant,category,amount,date,payment_method,notes
+Pizza dinner,Domino's,Food,450,2025-01-01,UPI,Friday dinner
+Office commute,Uber,Travel,120,2025-01-02,UPI,Morning office commute
+Electric bill,Tata Power,Bills,800,2025-01-03,UPI,Monthly electricity bill
+Lunch at KFC,KFC,Food,300,2025-01-04,Credit Card,Lunch
+Cab to airport,Ola,Travel,650,2025-01-05,UPI,Airport travel
+Paid electricity bill,Torrent,Bills,900,2025-01-06,UPI,Electricity payment
+Coffee and snacks,Starbucks,Food,250,2025-01-08,UPI,Evening snacks
+Bus pass,MSRTC,Travel,500,2025-01-10,Debit Card,Monthly travel
+Internet bill,Jio,Bills,699,2025-01-12,UPI,Internet bill
+Dinner at restaurant,McDonalds,Food,550,2025-01-15,Credit Card,Dinner
+Auto ride,Rickshaw,Travel,180,2025-01-17,Cash,Local travel
+Mobile recharge,Airtel,Bills,299,2025-01-18,UPI,Mobile recharge

@@ -1,0 +1,56 @@
+description,merchant,category
+Pizza dinner,Domino's,Food
+Pizza order,Domino's,Food
+Cheese pizza,Domino's,Food
+Dinner from Domino's,Domino's,Food
+Burger and fries,KFC,Food
+Lunch at KFC,KFC,Food
+KFC meal,KFC,Food
+Fried chicken,KFC,Food
+Coffee and snacks,Starbucks,Food
+Morning coffee,Starbucks,Food
+Starbucks coffee,Starbucks,Food
+Coffee with friends,Starbucks,Food
+Burger meal,McDonalds,Food
+Dinner at McDonalds,McDonalds,Food
+McDonalds lunch,McDonalds,Food
+Fast food,McDonalds,Food
+Restaurant dinner,Restaurant,Food
+Lunch at restaurant,Restaurant,Food
+Food delivery,Swiggy,Food
+Online food order,Zomato,Food
+Office commute,Uber,Travel
+Uber ride,Uber,Travel
+Cab ride,Uber,Travel
+Uber to office,Uber,Travel
+Airport cab,Ola,Travel
+Ola ride,Ola,Travel
+Cab to airport,Ola,Travel
+Local cab,Ola,Travel
+Bus pass,MSRTC,Travel
+MSRTC bus ticket,MSRTC,Travel
+Bus journey,MSRTC,Travel
+Monthly bus pass,MSRTC,Travel
+Auto ride,Rickshaw,Travel
+Rickshaw ride,Rickshaw,Travel
+Local auto,Rickshaw,Travel
+Auto to college,Rickshaw,Travel
+Train ticket,Indian Railways,Travel
+Metro ticket,Metro,Travel
+Electric bill,Tata Power,Bills
+Electricity payment,Tata Power,Bills
+Monthly electricity bill,Tata Power,Bills
+Tata Power bill,Tata Power,Bills
+Electric bill,Torrent,Bills
+Torrent electricity payment,Torrent,Bills
+Monthly Torrent bill,Torrent,Bills
+Internet bill,Jio,Bills
+Jio internet recharge,Jio,Bills
+Jio broadband bill,Jio,Bills
+Mobile recharge,Airtel,Bills
+Airtel recharge,Airtel,Bills
+Airtel mobile bill,Airtel,Bills
+Phone recharge,Airtel,Bills
+Internet payment,Internet Provider,Bills
+Gas bill,Gas Company,Bills
+Monthly gas bill,Gas Company,Bills

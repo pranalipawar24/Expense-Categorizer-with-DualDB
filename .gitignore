@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# Uploaded files
+uploads/
+
+# Virtual environment
+venv/
+.venv/
+
+# IDE
+.vscode/

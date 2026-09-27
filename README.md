@@ -179,14 +179,6 @@ You can add Postman screenshots, DB screenshots, and charts here.
 
 ---
 
-## 👨‍💻 Author
-
-**Sujal Gangarde**  
-[GitHub Profile](https://github.com/sujalgangarde)  
-Project by a developer for developers and freelancers 🚀
-
----
-
 ## 🛡 License
 
 This project is licensed under the MIT License.

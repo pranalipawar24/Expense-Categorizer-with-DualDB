@@ -5,7 +5,7 @@ import math
 
 from flask import Flask, request, jsonify
 
-# Add REDACTED folder to path so we can import app modules directly
+# Add root folder to path so we can import app modules directly
 sys.path.append(
     os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..")

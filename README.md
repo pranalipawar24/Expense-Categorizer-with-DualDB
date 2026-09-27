@@ -72,11 +72,11 @@ pip install -r requirements.txt
 
 ### 🔐 3. Setup .env File
 
-Create a `.env` file in REDACTED:
+Create a `.env` file in root:
 
 ```ini
 MYSQL_HOST=localhost
-MYSQL_USER=REDACTED
+MYSQL_USER=root
 MYSQL_PASSWORD=password
 MYSQL_DATABASE=expenses_db
 

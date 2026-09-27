@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     container_name: expense-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "REDACTED"
+      MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: expense_db
     ports:
@@ -27,8 +27,8 @@ services:
       - "5000:5000"
     environment:
       MYSQL_HOST: mysql
-      MYSQL_USER: REDACTED
-      MYSQL_PASSWORD: "REDACTED"
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ""
       MYSQL_DATABASE: expense_db
       MONGO_URI: mongodb://mongodb:27017/
       MONGO_DB: expenses

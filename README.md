@@ -69,7 +69,6 @@ It also provides a monthly expense report and includes automated testing and CI/
 
 ## 🏗️ System Architecture
 
-```text
                     ┌─────────────────────┐
                     │     CSV Upload      │
                     └──────────┬──────────┘

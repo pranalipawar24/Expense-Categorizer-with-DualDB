@@ -565,10 +565,6 @@ MONGO_URI=mongodb://localhost:27017/
 MONGO_DB=expenses
 ~~~
 
-⚠️ Never commit the `.env` file to GitHub.
-
-It is already included in `.gitignore`.
-
 ---
 
 ## 5. Train the ML Model

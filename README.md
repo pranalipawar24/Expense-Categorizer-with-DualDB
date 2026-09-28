@@ -1,186 +1,100 @@
-# 💸 Expense Auto-Categorizer with Dual DB (MySQL + MongoDB)
+# 💰 Expense Categorizer with Dual Database
 
-A Python-based real-time expense tracker that uses **machine learning** to auto-categorize transactions and stores data in both **MySQL** and **MongoDB** for hybrid flexibility.
+An intelligent **Expense Categorization and Management System** that automatically categorizes expenses using **Machine Learning** and stores data using both **MySQL and MongoDB**.
 
----
-
-## 📌 Features
-
-- ✅ Upload expenses via CSV (manual uploads supported)
-- 🤖 Automatically categorizes transactions using ML/NLP
-- 🗃 Stores structured data (amount, date, method, merchant, category) in **MySQL**
-- 📎 Stores unstructured data (notes, receipts, tags) in **MongoDB**
-- 📊 Monthly category-wise spending reports
-- 🔐 Environment variables for DB credentials
-- 🧠 Easily extendable (add OCR, retraining, user accounts, etc.)
+The project also includes **automated testing, Docker containerization, GitHub Actions CI/CD, and Docker Hub deployment**.
 
 ---
 
-## ⚙️ Tech Stack
+## 🚀 Project Overview
 
-| Component              | Technology                      |
-|------------------------|---------------------------------|
-| Backend                | Python + Flask                  |
-| Database (Relational)  | MySQL                           |
-| Database (NoSQL)       | MongoDB                         |
-| ML Model               | Naive Bayes + TF-IDF (Scikit-learn) |
-| File Upload            | CSV (via API/Postman or UI)     |
-| Environment Mgmt       | Python Dotenv                   |
+Managing and categorizing expenses manually can be time-consuming.
 
----
+This project provides an automated solution where users can upload expense data through a CSV file. The system uses a **Machine Learning model based on TF-IDF and Multinomial Naive Bayes** to predict expense categories.
 
-## 📁 Project Structure
+The application stores:
 
-```
-expense-auto-categorizer/
-│
-├── app/
-│   ├── main.py               # Flask app (API)
-│   ├── db/
-│   │   ├── mysql_conn.py     # MySQL connector
-│   │   └── mongo_conn.py     # MongoDB connector
-│   ├── utils/
-│   │   ├── parser.py         # CSV parser
-│   │   ├── categorizer.py    # ML predictor
-│   │   └── ml_model_trainer.py # Model training
-│   ├── models/
-│   └── category_model.pkl    # Saved ML model
-│
-├── uploads/                  # Uploaded CSV files
-├── sample_expenses.csv       # Example CSV to test
-├── .env                      # Environment variables
-├── requirements.txt          # Dependencies
-├── README.md                 # This file
-```
+- Structured transaction data in **MySQL**
+- Additional notes in **MongoDB**
+
+It also provides a monthly expense report and includes automated testing and CI/CD integration.
 
 ---
 
-## 🚀 Getting Started
+## ✨ Features
 
-### 🔧 1. Clone the Repo
-
-```bash
-git clone https://github.com/sujalgangarde/expense-auto-categorizer.git
-cd expense-auto-categorizer
-```
-
-### 📦 2. Install Requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-### 🔐 3. Setup .env File
-
-Create a `.env` file in root:
-
-```ini
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=password
-MYSQL_DATABASE=expenses_db
-
-MONGO_URI=mongodb://localhost:27017/
-MONGO_DB=expenses
-```
-
-### 🛢 4. Create MySQL DB & Table
-
-```sql
-CREATE DATABASE expenses_db;
-
-USE expenses_db;
-
-CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    amount DECIMAL(10, 2),
-    date DATE,
-    payment_method VARCHAR(50),
-    merchant VARCHAR(100),
-    category VARCHAR(50)
-);
-```
-
-### 💾 5. Train the ML Model
-
-```bash
-python app/utils/ml_model_trainer.py
-```
-
-### ▶️ 6. Run the Flask Server
-
-```bash
-python app/main.py
-```
+- 📂 Upload expenses using CSV files
+- 🤖 Automatic expense categorization using Machine Learning
+- 🗄️ Store transaction data in MySQL
+- 🍃 Store expense notes in MongoDB
+- 📊 Generate monthly expense reports
+- 🧪 Automated testing using Pytest
+- 📈 Test coverage reporting
+- 🐳 Docker containerization
+- 🔄 Docker Compose for multi-container setup
+- ⚙️ GitHub Actions CI/CD pipeline
+- 🔐 Secure GitHub Secrets for Docker Hub authentication
+- 📦 Automatic Docker image push to Docker Hub
 
 ---
 
-## 📤 API Endpoints
+## 🛠️ Tech Stack
 
-### 📍 POST `/upload_csv`
+### Backend
+- Python
+- Flask
 
-Upload CSV of transactions.
+### Machine Learning
+- Scikit-learn
+- TF-IDF Vectorization
+- Multinomial Naive Bayes
+- Pandas
+- NumPy
 
-**Form-data:**
+### Databases
+- MySQL
+- MongoDB
 
-| Key  | Type | Value                |
-|------|------|----------------------|
-| file | File | sample_expenses.csv  |
+### Testing
+- Pytest
+- Pytest-Cov
 
-**Response:**
-```json
-{ "message": "✅ CSV processed and data stored." }
-```
-
----
-
-### 📍 GET `/monthly_report/<month>/<year>`
-
-Example:
-
-```bash
-GET http://localhost:5000/monthly_report/7/2025
-```
-
-**Response:**
-```json
-[
-  {"category": "Food", "total": 870.0},
-  {"category": "Travel", "total": 920.0}
-]
-```
+### DevOps
+- Docker
+- Docker Compose
+- GitHub Actions
+- Docker Hub
 
 ---
 
-## 🧪 Sample CSV Format
+## 🏗️ System Architecture
 
-```csv
-description,merchant,amount,date,method,notes,tags
-Pizza dinner,Domino's,450.00,2025-07-01,Credit Card,Friday treat,"['food', 'takeout']"
-Uber ride,Uber,120.00,2025-07-02,UPI,Morning commute,"['travel']"
-```
-
----
-
-## 📷 Screenshots
-
-You can add Postman screenshots, DB screenshots, and charts here.
-
----
-
-## 🧠 Future Improvements
-
-- 📷 OCR for scanned receipts
-- 🧠 Auto ML retraining with feedback
-- 🌐 Frontend (React/Streamlit)
-- 📈 Charts and Dashboards
-- 🔒 JWT login and multiple users
-
----
-
-## 🛡 License
-
-This project is licensed under the MIT License.
-
----
+```text
+                    ┌─────────────────────┐
+                    │     CSV Upload      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     Flask API       │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   ML Categorizer    │
+                    │                     │
+                    │ TF-IDF + Naive Bayes│
+                    └──────────┬──────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 │                           │
+                 ▼                           ▼
+        ┌─────────────────┐        ┌─────────────────┐
+        │      MySQL      │        │     MongoDB     │
+        │                 │        │                 │
+        │ Transactions    │        │ Expense Notes   │
+        └─────────────────┘        └─────────────────┘
+                 │
+                 ▼
+        ┌─────────────────┐
+        │ Monthly Report  │
+        └─────────────────┘

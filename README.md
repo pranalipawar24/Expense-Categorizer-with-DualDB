@@ -650,7 +650,6 @@ Possible future improvements include:
 **Pranali Pawar**
 
 Computer Engineering Student
- Pune, India
 
 ### GitHub
 

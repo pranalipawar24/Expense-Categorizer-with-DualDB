@@ -672,17 +672,4 @@ This project was developed as a learning and portfolio project to demonstrate:
 -  DevOps practices 
 
 ---
-
-## 📌 Key Highlights
-
-~~~text
-🤖 Machine Learning
-🗄️ MySQL + MongoDB
-🌐 Flask REST API
-🧪 18 Automated Tests
-📊 92% Test Coverage
-🐳 Docker
-🔄 GitHub Actions CI/CD
-📦 Docker Hub
-🔐 GitHub Secrets
 ~~~

@@ -672,4 +672,3 @@ This project was developed as a learning and portfolio project to demonstrate:
 -  DevOps practices 
 
 ---
-~~~

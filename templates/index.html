@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Categorizer · Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16v16H4z" rx="2"/>
+                    <path d="M4 9h16M9 4v16"/>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <div class="brand-title">Expense</div>
+                <div class="brand-sub">Categorizer</div>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a href="#dashboard" class="nav-item active" data-view="dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+                Dashboard
+            </a>
+            <a href="#transactions" class="nav-item" data-view="transactions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h10"/>
+                </svg>
+                Transactions
+            </a>
+            <a href="#upload" class="nav-item" data-view="upload">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3v14M5 10l7-7 7 7M5 21h14"/>
+                </svg>
+                Upload
+            </a>
+            <a href="#reports" class="nav-item" data-view="reports">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/>
+                </svg>
+                Reports
+            </a>
+            <a href="#notes" class="nav-item" data-view="notes">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 4h11l3 3v13H5z"/>
+                    <path d="M9 9h6M9 13h6M9 17h4"/>
+                </svg>
+                Notes
+            </a>
+            <a href="#settings" class="nav-item" data-view="settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2 2 2 0 1 1-4 0 1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 15a2 2 0 1 1 0-4 1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 11.5 4a2 2 0 1 1 4 0 1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.7 1.7 0 0 0 19.4 11a2 2 0 1 1 0 4z"/>
+                </svg>
+                Settings
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="status-pill" id="server-status">
+                <span class="dot"></span>
+                <span id="server-status-text">Checking…</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ========== MAIN ========== -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <h1 id="page-title">Dashboard</h1>
+            <div class="topbar-actions">
+                <div class="pill-select">
+                    <select id="year-select">
+                        <option>2026</option>
+                        <option selected>2025</option>
+                        <option>2024</option>
+                    </select>
+                </div>
+                <button class="btn primary" id="btn-upload">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3v14M5 10l7-7 7 7M5 21h14"/>
+                    </svg>
+                    Upload expenses
+                </button>
+                <button class="icon-btn" title="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 8a6 6 0 0 1 12 0v5l2 3H4l2-3z"/>
+                        <path d="M10 20a2 2 0 0 0 4 0"/>
+                    </svg>
+                </button>
+                <div class="user-chip">
+                    <div class="avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+                        </svg>
+                    </div>
+                    <span>Default user</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== DASHBOARD VIEW ===== -->
+        <section class="view active" id="view-dashboard">
+            <p class="page-sub" id="dashboard-sub">Spending for 2025, built from your monthly reports.</p>
+
+            <div class="grid-kpi">
+                <!-- Total spent -->
+                <div class="card kpi">
+                    <div class="kpi-label">Total spent in <span id="kpi-year">2025</span></div>
+                    <div class="kpi-value" id="kpi-total">₹0</div>
+                    <div class="chart-mini" id="chart-months-wrap">
+                        <canvas id="chart-months"></canvas>
+                    </div>
+                </div>
+
+                <!-- Latest month -->
+                <div class="card kpi small">
+                    <div class="kpi-head">
+                        <span class="kpi-label">Latest month with data</span>
+                        <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="5" width="18" height="16" rx="2"/>
+                            <path d="M3 10h18M8 3v4M16 3v4"/>
+                        </svg>
+                    </div>
+                    <div class="kpi-value" id="kpi-latest-total">₹0</div>
+                    <div class="kpi-sub" id="kpi-latest-month">—</div>
+                </div>
+
+                <!-- Transactions -->
+                <div class="card kpi small">
+                    <div class="kpi-head">
+                        <span class="kpi-label">Transactions in <span id="kpi-year-2">2025</span></span>
+                        <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </div>
+                    <div class="kpi-value" id="kpi-count">—</div>
+                    <div class="kpi-sub" id="kpi-count-note">Needs GET /transactions</div>
+                </div>
+
+                <!-- Average -->
+                <div class="card kpi small">
+                    <div class="kpi-head">
+                        <span class="kpi-label">Average transaction</span>
+                        <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/>
+                        </svg>
+                    </div>
+                    <div class="kpi-value" id="kpi-avg">—</div>
+                    <div class="kpi-sub" id="kpi-avg-note">Needs GET /transactions</div>
+                </div>
+
+                <!-- Top category -->
+                <div class="card kpi small">
+                    <div class="kpi-head">
+                        <span class="kpi-label">Top category</span>
+                        <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 12l-8 8-8-8 8-8z"/>
+                        </svg>
+                    </div>
+                    <div class="kpi-value" id="kpi-top-cat">—</div>
+                    <div class="kpi-sub" id="kpi-top-cat-sub">—</div>
+                </div>
+            </div>
+
+            <!-- Charts row -->
+            <div class="grid-charts">
+                <div class="card chart-card">
+                    <div class="card-title">Category distribution</div>
+                    <div class="card-sub">Share of spending in <span id="dist-year">2025</span></div>
+                    <div class="donut-wrap">
+                        <canvas id="chart-donut"></canvas>
+                        <div class="donut-center">
+                            <div class="donut-label">Total</div>
+                            <div class="donut-total" id="donut-total">₹0</div>
+                        </div>
+                    </div>
+                    <div class="legend" id="donut-legend"></div>
+                </div>
+
+                <div class="card chart-card">
+                    <div class="card-title">Category comparison</div>
+                    <div class="card-sub">Total spent per category in <span id="cmp-year">2025</span></div>
+                    <canvas id="chart-bars" height="220"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent transactions -->
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <div class="card-title">Recent transactions</div>
+                        <div class="card-sub">Latest activity in <span id="recent-year">2025</span></div>
+                    </div>
+                    <button class="btn ghost" id="btn-view-all">View all</button>
+                </div>
+                <div id="recent-list" class="recent-list">
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 8v4l3 2"/>
+                            </svg>
+                        </div>
+                        <div class="empty-title">No transactions yet</div>
+                        <div class="empty-sub">Upload a CSV to see your recent activity here.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== UPLOAD VIEW ===== -->
+        <section class="view" id="view-upload">
+            <p class="page-sub">Upload a CSV of expenses. The ML model will categorize each transaction.</p>
+            <div class="card">
+                <form id="upload-form">
+                    <div class="dropzone" id="dropzone">
+                        <input type="file" id="file-input" accept=".csv" hidden />
+                        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 3v14M5 10l7-7 7 7M5 21h14"/>
+                        </svg>
+                        <div class="dz-title" id="file-label">Click to select a CSV or drag &amp; drop</div>
+                        <div class="dz-sub">Required columns: description, merchant, amount, date, payment_method, notes</div>
+                    </div>
+                    <button type="submit" class="btn primary" id="upload-btn" style="width:100%">
+                        Upload &amp; process
+                    </button>
+                </form>
+                <div id="upload-status" class="status"></div>
+            </div>
+        </section>
+
+        <!-- ===== TRANSACTIONS VIEW ===== -->
+        <section class="view" id="view-transactions">
+            <p class="page-sub">All transactions stored in MySQL.</p>
+            <div class="card" style="overflow-x:auto">
+                <table class="data-table" id="txn-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Date</th><th>Merchant</th><th>Category</th>
+                            <th>Payment</th><th style="text-align:right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="txn-tbody">
+                        <tr><td colspan="6" class="muted" style="text-align:center;padding:24px">Loading…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== REPORTS VIEW ===== -->
+        <section class="view" id="view-reports">
+            <p class="page-sub">Monthly expense summary by category.</p>
+            <div class="card">
+                <div class="report-controls">
+                    <label>Month
+                        <select id="month-select">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </label>
+                    <label>Year
+                        <input type="number" id="report-year" value="2025" />
+                    </label>
+                    <button class="btn primary" id="report-btn">Get report</button>
+                </div>
+                <div id="report-status" class="status"></div>
+                <div class="report-cards" id="report-cards"></div>
+            </div>
+        </section>
+
+        <!-- ===== NOTES VIEW ===== -->
+        <section class="view" id="view-notes">
+            <p class="page-sub">Notes stored in MongoDB.</p>
+            <div class="card">
+                <div id="notes-list" class="notes-list">
+                    <div class="empty-state">
+                        <div class="empty-title">No notes yet</div>
+                        <div class="empty-sub">Notes from uploaded CSVs will appear here.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SETTINGS VIEW ===== -->
+        <section class="view" id="view-settings">
+            <p class="page-sub">Application information.</p>
+            <div class="card settings-list">
+                <div class="setting-row"><span>Backend</span><span>Flask 3.0</span></div>
+                <div class="setting-row"><span>ML model</span><span>TF-IDF + MultinomialNB</span></div>
+                <div class="setting-row"><span>MySQL</span><span>expense_db.transactions</span></div>
+                <div class="setting-row"><span>MongoDB</span><span>expenses.notes</span></div>
+                <div class="setting-row"><span>Docker image</span><span>expense-categorizer-with-dualdb-main-app</span></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,194 +1,611 @@
-# 💸 Expense Auto-Categorizer with Dual DB (MySQL + MongoDB)
+# 💰 Expense Categorizer with Dual Database
 
-A Python-based real-time expense tracker that uses **machine learning** to auto-categorize transactions and stores data in both **MySQL** and **MongoDB** for hybrid flexibility.
+An intelligent **Expense Categorization and Management System** that automatically categorizes expenses using **Machine Learning** and stores data using both **MySQL and MongoDB**.
 
----
-
-## 📌 Features
-
-- ✅ Upload expenses via CSV (manual uploads supported)
-- 🤖 Automatically categorizes transactions using ML/NLP
-- 🗃 Stores structured data (amount, date, method, merchant, category) in **MySQL**
-- 📎 Stores unstructured data (notes, receipts, tags) in **MongoDB**
-- 📊 Monthly category-wise spending reports
-- 🔐 Environment variables for DB credentials
-- 🧠 Easily extendable (add OCR, retraining, user accounts, etc.)
+The project also includes **automated testing, Docker containerization, GitHub Actions CI/CD, and Docker Hub deployment**.
 
 ---
 
-## ⚙️ Tech Stack
+## 🚀 Project Overview
 
-| Component              | Technology                      |
-|------------------------|---------------------------------|
-| Backend                | Python + Flask                  |
-| Database (Relational)  | MySQL                           |
-| Database (NoSQL)       | MongoDB                         |
-| ML Model               | Naive Bayes + TF-IDF (Scikit-learn) |
-| File Upload            | CSV (via API/Postman or UI)     |
-| Environment Mgmt       | Python Dotenv                   |
+Managing and categorizing expenses manually can be time-consuming.
+
+This project provides an automated solution where users can upload expense data through a CSV file. The system uses a **Machine Learning model based on TF-IDF and Multinomial Naive Bayes** to predict expense categories.
+
+The application stores:
+
+- Structured transaction data in **MySQL**
+- Additional notes in **MongoDB**
+
+It also provides a monthly expense report and includes automated testing and CI/CD integration.
 
 ---
 
-## 📁 Project Structure
+## ✨ Features
 
-```
-expense-auto-categorizer/
+- 📂 Upload expenses using CSV files
+- 🎨 Interactive web frontend
+- 🤖 Automatic expense categorization using Machine Learning
+- 🗄️ Store transaction data in MySQL
+- 🍃 Store expense notes in MongoDB
+- 📊 Generate monthly expense reports
+- 🧪 Automated testing using Pytest
+- 📈 Test coverage reporting
+- 🐳 Docker containerization
+- 🔄 Docker Compose for multi-container setup
+- ⚙️ GitHub Actions CI/CD pipeline
+- 🔐 Secure GitHub Secrets for Docker Hub authentication
+- 📦 Automatic Docker image push to Docker Hub
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- Python
+- Flask
+
+### Frontend
+- HTML
+- CSS
+- JavaScript
+- Chart.js
+
+### Machine Learning
+- Scikit-learn
+- TF-IDF Vectorization
+- Multinomial Naive Bayes
+- Pandas
+- NumPy
+
+### Databases
+- MySQL
+- MongoDB
+
+### Testing
+- Pytest
+- Pytest-Cov
+
+### DevOps
+- Docker
+- Docker Compose
+- GitHub Actions
+- Docker Hub
+
+---
+
+## 🏗️ System Architecture
+
+                    ┌─────────────────────┐
+                    │       Frontend      │
+                    │    HTML/CSS/JS      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     Flask API       │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   ML Categorizer    │
+                    │ TF-IDF + Naive Bayes│
+                    └──────────┬──────────┘
+                               │
+                     ┌─────────┴─────────┐
+                     ▼                   ▼
+              ┌─────────────┐     ┌─────────────┐
+              │    MySQL    │     │   MongoDB   │
+              │ Transactions│     │ Expense Notes│
+              └─────────────┘     └─────────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Monthly Report    │
+                    └─────────────────────┘
+---
+
+# 📂 Project Structure
+
+~~~text
+Expense-Categorizer-with-DualDB/
 │
 ├── app/
-│   ├── main.py               # Flask app (API)
+│   ├── main.py
 │   ├── db/
-│   │   ├── mysql_conn.py     # MySQL connector
-│   │   └── mongo_conn.py     # MongoDB connector
-│   ├── utils/
-│   │   ├── parser.py         # CSV parser
-│   │   ├── categorizer.py    # ML predictor
-│   │   └── ml_model_trainer.py # Model training
+│   │   └── mysql_conn.py
 │   ├── models/
-│   └── category_model.pkl    # Saved ML model
+│   │   └── category_model.pkl
+│   └── utils/
+│       ├── categorizer.py
+│       └── ml_model_trainer.py
 │
-├── uploads/                  # Uploaded CSV files
-├── sample_expenses.csv       # Example CSV to test
-├── .env                      # Environment variables
-├── requirements.txt          # Dependencies
-├── README.md                 # This file
-```
+├── templates/
+│   └── index.html
+│
+├── static/
+│   ├── app.js
+│   └── style.css
+│
+├── evaluation/
+├── tests/
+├── TestingDocumentation/
+├── ScreenShots/
+├── training_data.csv
+├── sample_expenses.csv
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+├── .gitignore
+└── README.md
+~~~
 
 ---
 
-## 🚀 Getting Started
+# 🤖 Machine Learning
 
-### 🔧 1. Clone the Repo
+The project uses a text classification model to categorize expenses.
 
-```bash
-git clone https://github.com/sujalgangarde/expense-auto-categorizer.git
-cd expense-auto-categorizer
-```
+### Input
 
-### 📦 2. Install Requirements
+The model uses:
 
-```bash
-pip install -r requirements.txt
-```
-
-### 🔐 3. Setup .env File
-
-Create a `.env` file in root:
-
-```ini
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=password
-MYSQL_DATABASE=expenses_db
-
-MONGO_URI=mongodb://localhost:27017/
-MONGO_DB=expenses
-```
-
-### 🛢 4. Create MySQL DB & Table
-
-```sql
-CREATE DATABASE expenses_db;
-
-USE expenses_db;
-
-CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    amount DECIMAL(10, 2),
-    date DATE,
-    payment_method VARCHAR(50),
-    merchant VARCHAR(100),
-    category VARCHAR(50)
-);
-```
-
-### 💾 5. Train the ML Model
-
-```bash
-python app/utils/ml_model_trainer.py
-```
-
-### ▶️ 6. Run the Flask Server
-
-```bash
-python app/main.py
-```
-
----
-
-## 📤 API Endpoints
-
-### 📍 POST `/upload_csv`
-
-Upload CSV of transactions.
-
-**Form-data:**
-
-| Key  | Type | Value                |
-|------|------|----------------------|
-| file | File | sample_expenses.csv  |
-
-**Response:**
-```json
-{ "message": "✅ CSV processed and data stored." }
-```
-
----
-
-### 📍 GET `/monthly_report/<month>/<year>`
+~~~text
+Description + Merchant
+~~~
 
 Example:
 
-```bash
-GET http://localhost:5000/monthly_report/7/2025
-```
+~~~text
+"Friday dinner Domino's"
+~~~
 
-**Response:**
-```json
-[
-  {"category": "Food", "total": 870.0},
-  {"category": "Travel", "total": 920.0}
-]
-```
+### Processing
+
+The text is converted into numerical features using:
+
+~~~text
+TF-IDF Vectorization
+~~~
+
+The classification model used is:
+
+~~~text
+Multinomial Naive Bayes
+~~~
+
+### Output
+
+The model predicts categories such as:
+
+~~~text
+Food
+Travel
+Bills
+~~~
+
+The trained model is stored as:
+
+~~~text
+app/models/category_model.pkl
+~~~
+---
+
+# 🗄️ Database Design
+
+The application uses a **dual database architecture**.
+
+## MySQL
+
+MySQL stores structured transaction information.
+
+Database:
+
+~~~text
+expense_db
+~~~
+
+Table:
+
+~~~text
+transactions
+~~~
+
+Example fields include:
+
+~~~text
+id
+merchant
+category
+amount
+date
+payment_method
+description
+~~~
 
 ---
 
-## 🧪 Sample CSV Format
+## MongoDB
 
-```csv
-description,merchant,amount,date,method,notes,tags
-Pizza dinner,Domino's,450.00,2025-07-01,Credit Card,Friday treat,"['food', 'takeout']"
-Uber ride,Uber,120.00,2025-07-02,UPI,Morning commute,"['travel']"
-```
+MongoDB stores expense-related notes.
 
----
+Database:
 
-## 📷 Screenshots
+~~~text
+expenses
+~~~
 
-You can add Postman screenshots, DB screenshots, and charts here.
+Collection:
 
----
+~~~text
+notes
+~~~
 
-## 🧠 Future Improvements
-
-- 📷 OCR for scanned receipts
-- 🧠 Auto ML retraining with feedback
-- 🌐 Frontend (React/Streamlit)
-- 📈 Charts and Dashboards
-- 🔒 JWT login and multiple users
+MongoDB is used because its document-based structure provides flexibility for storing notes and additional information.
 
 ---
 
-## 👨‍💻 Author
+# 🔌 API Endpoints
 
-**Sujal Gangarde**  
-[GitHub Profile](https://github.com/sujalgangarde)  
-Project by a developer for developers and freelancers 🚀
+## Upload CSV
+
+~~~text
+POST /upload_csv
+~~~
+
+Uploads the expense CSV file and processes the transactions.
 
 ---
 
-## 🛡 License
+## Monthly Report
 
-This project is licensed under the MIT License.
+~~~text
+GET /monthly_report/<month>/<year>
+~~~
+
+Example:
+
+~~~text
+GET /monthly_report/1/2025
+~~~
+
+Returns the monthly expense summary by category.
+
+Example:
+
+~~~text
+{
+    "Food": 1550,
+    "Travel": 1450,
+    "Bills": 2698,
+    "Total": 5698
+}
+~~~
+
+---
+
+# 🧪 Testing
+
+Testing is an important part of this project.
+
+The project uses **Pytest** for automated testing.
+
+Tests cover:
+
+-  Machine Learning prediction 
+-  Input validation 
+-  CSV upload 
+-  MySQL database failures 
+-  MongoDB database failures 
+-  Monthly reports 
+-  Monthly report failure scenarios 
+-  API functionality 
+
+Run all tests using:
+
+~~~bash
+python -m pytest -q
+~~~
+
+The project currently contains:
+
+~~~text
+18 automated tests
+~~~
+
+All tests pass successfully.
+
+### Test Coverage
+
+Current overall test coverage:
+
+~~~text
+92%
+~~~
+
+---
+
+# 📊 ML Model Evaluation
+
+The ML model was evaluated using test datasets.
+
+### Hard Test Dataset
+
+~~~text
+Samples: 15
+Accuracy: 93%
+Precision: 94%
+Recall: 93%
+F1 Score: 93%
+~~~
+
+### Unseen Test Dataset
+
+~~~text
+Samples: 30
+Accuracy: 100%
+~~~
+
+These evaluations were performed separately from the application's automated test suite.
+
+---
+
+# 🐳 Docker
+
+The application is containerized using Docker.
+
+The Docker image packages:
+
+-  Python 
+-  Flask application 
+-  Required Python dependencies 
+-  Machine Learning model 
+-  Application source code 
+
+## Build Docker Image
+
+~~~bash
+docker build -t pranalipawar/expense-categorizer:latest .
+~~~
+
+## Run Docker Image
+
+~~~bash
+docker run -p 5000:5000 pranalipawar/expense-categorizer:latest
+~~~
+
+Application:
+
+~~~text
+http://localhost:5000
+~~~
+
+---
+
+# 🐳 Docker Compose
+
+The project uses Docker Compose to run multiple services together.
+
+Services:
+
+~~~text
+┌──────────────────────────┐
+│   Expense Categorizer    │
+│        Flask App         │
+│        Port 5000         │
+└────────────┬─────────────┘
+             │
+      ┌──────┴──────┐
+      │             │
+      ▼             ▼
+   MySQL          MongoDB
+  Port 3307       Port 27017
+~~~
+
+Start the complete application:
+
+~~~bash
+docker compose up --build
+~~~
+
+Stop the containers:
+
+~~~bash
+docker compose down
+~~~
+
+---
+
+# 🔄 CI/CD Pipeline
+
+This project includes an automated **CI/CD pipeline using GitHub Actions**.
+
+The workflow is triggered when code is pushed to the `main` branch or when a pull request is created.
+
+### Pipeline
+
+~~~text
+Developer
+    │
+    │ git push
+    ▼
+GitHub Repository
+    │
+    ▼
+GitHub Actions
+    │
+    ├── Install Dependencies
+    │
+    ├── Run Automated Tests
+    │
+    ├── Build Docker Image
+    │
+    ├── Login to Docker Hub
+    │
+    └── Push Docker Image
+             │
+             ▼
+         Docker Hub
+~~~
+
+### CI
+
+The CI stage:
+
+-  Installs project dependencies 
+-  Runs automated tests 
+-  Builds the Docker image 
+
+### CD
+
+The CD stage:
+
+-  Authenticates with Docker Hub 
+-  Pushes the latest Docker image 
+
+---
+
+# 📦 Docker Hub
+
+The Docker image is available on Docker Hub:
+
+**Repository:**
+
+~~~text
+pranalipawar/expense-categorizer
+~~~
+
+The latest image is automatically pushed through the GitHub Actions CI/CD pipeline.
+
+---
+
+# ⚙️ Local Setup
+
+## 1. Clone the Repository
+
+~~~bash
+git clone https://github.com/pranalipawar24/Expense-Categorizer-with-DualDB.git
+~~~
+
+Move into the project:
+
+~~~bash
+cd Expense-Categorizer-with-DualDB
+~~~
+
+---
+
+## 2. Create Virtual Environment
+
+~~~bash
+python -m venv venv
+~~~
+
+Activate it on Windows:
+
+~~~bash
+venv\Scripts\activate
+~~~
+
+---
+
+## 3. Install Dependencies
+
+~~~bash
+pip install -r requirements.txt
+~~~
+
+---
+
+## 4. Configure Environment Variables
+
+Create a `.env` file in the project root.
+
+Example structure:
+
+~~~text
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=your_password
+MYSQL_DATABASE=expense_db
+
+MONGO_URI=mongodb://localhost:27017/
+MONGO_DB=expenses
+~~~
+
+---
+
+## 5. Train the ML Model
+
+If required, run:
+
+~~~bash
+python app/utils/ml_model_trainer.py
+~~~
+
+This generates:
+
+~~~text
+app/models/category_model.pkl
+~~~
+
+---
+
+## 6. Run the Application
+
+~~~bash
+python app/main.py
+~~~
+
+The application will run on:
+
+~~~text
+http://127.0.0.1:5000
+~~~
+
+---
+
+# 🧪 Run Tests
+
+Run the complete test suite:
+
+~~~bash
+python -m pytest -q
+~~~
+
+Run tests with coverage:
+
+~~~bash
+python -m pytest --cov=. --cov-report=term-missing
+~~~
+
+---
+
+# 👩‍💻 Author
+
+**Pranali Pawar**
+
+Computer Engineering Student
+
+### GitHub
+
+~~~text
+https://github.com/pranalipawar24
+~~~
+
+---
+
+# ⭐ Acknowledgements
+
+This project was developed as a learning and portfolio project to demonstrate:
+
+-  Backend development 
+-  Machine Learning 
+-  Database integration 
+-  Software testing 
+-  Docker 
+-  CI/CD 
+-  DevOps practices 
 
 ---

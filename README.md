@@ -24,6 +24,7 @@ It also provides a monthly expense report and includes automated testing and CI/
 ## ✨ Features
 
 - 📂 Upload expenses using CSV files
+- 🎨 Interactive web frontend
 - 🤖 Automatic expense categorization using Machine Learning
 - 🗄️ Store transaction data in MySQL
 - 🍃 Store expense notes in MongoDB
@@ -43,6 +44,12 @@ It also provides a monthly expense report and includes automated testing and CI/
 ### Backend
 - Python
 - Flask
+
+### Frontend
+- HTML
+- CSS
+- JavaScript
+- Chart.js
 
 ### Machine Learning
 - Scikit-learn
@@ -70,7 +77,8 @@ It also provides a monthly expense report and includes automated testing and CI/
 ## 🏗️ System Architecture
 
                     ┌─────────────────────┐
-                    │     CSV Upload      │
+                    │       Frontend      │
+                    │    HTML/CSS/JS      │
                     └──────────┬──────────┘
                                │
                                ▼
@@ -78,25 +86,63 @@ It also provides a monthly expense report and includes automated testing and CI/
                     │     Flask API       │
                     └──────────┬──────────┘
                                │
-                    ┌──────────▼──────────┐
+                               ▼
+                    ┌─────────────────────┐
                     │   ML Categorizer    │
-                    │                     │
                     │ TF-IDF + Naive Bayes│
                     └──────────┬──────────┘
                                │
-                 ┌─────────────┴─────────────┐
-                 │                           │
-                 ▼                           ▼
-        ┌─────────────────┐        ┌─────────────────┐
-        │      MySQL      │        │     MongoDB     │
-        │                 │        │                 │
-        │ Transactions    │        │ Expense Notes   │
-        └─────────────────┘        └─────────────────┘
-                 │
-                 ▼
-        ┌─────────────────┐
-        │ Monthly Report  │
-        └─────────────────┘
+                     ┌─────────┴─────────┐
+                     ▼                   ▼
+              ┌─────────────┐     ┌─────────────┐
+              │    MySQL    │     │   MongoDB   │
+              │ Transactions│     │ Expense Notes│
+              └─────────────┘     └─────────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Monthly Report    │
+                    └─────────────────────┘
+---
+
+# 📂 Project Structure
+
+~~~text
+Expense-Categorizer-with-DualDB/
+│
+├── app/
+│   ├── main.py
+│   ├── db/
+│   │   └── mysql_conn.py
+│   ├── models/
+│   │   └── category_model.pkl
+│   └── utils/
+│       ├── categorizer.py
+│       └── ml_model_trainer.py
+│
+├── templates/
+│   └── index.html
+│
+├── static/
+│   ├── app.js
+│   └── style.css
+│
+├── evaluation/
+├── tests/
+├── TestingDocumentation/
+├── ScreenShots/
+├── training_data.csv
+├── sample_expenses.csv
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+├── .gitignore
+└── README.md
+~~~
+
+---
+
 # 🤖 Machine Learning
 
 The project uses a text classification model to categorize expenses.
@@ -144,56 +190,6 @@ The trained model is stored as:
 ~~~text
 app/models/category_model.pkl
 ~~~
-
----
-
-# 📂 Project Structure
-
-~~~text
-Expense-Categorizer-with-DualDB/
-│
-├── app/
-│   ├── main.py
-│   │
-│   ├── db/
-│   │   └── mysql_conn.py
-│   │
-│   ├── models/
-│   │   └── category_model.pkl
-│   │
-│   └── utils/
-│       ├── categorizer.py
-│       └── ml_model_trainer.py
-│
-├── evaluation/
-│   └── evaluate_model.py
-│
-├── tests/
-│   ├── test_categorizer.py
-│   ├── test_validation.py
-│   ├── test_upload_api.py
-│   ├── test_database_failure.py
-│   ├── test_mongodb_failure.py
-│   ├── test_monthly_report.py
-│   └── test_monthly_report_failure.py
-│
-├── TestingDocumentation/
-│   ├── TEST PLAN.docx
-│   ├── TestCases.xlsx
-│   └── TEST REPORT.docx
-│
-├── ScreenShots/
-│
-├── training_data.csv
-├── sample_expenses.csv
-├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-├── .dockerignore
-├── .gitignore
-└── README.md
-~~~
-
 ---
 
 # 🗄️ Database Design
@@ -470,33 +466,6 @@ The CD stage:
 
 ---
 
-# 🔐 GitHub Secrets
-
-Docker Hub authentication is handled securely using **GitHub Repository Secrets**.
-
-The workflow uses:
-
-~~~text
-DOCKERHUB_USERNAME
-DOCKERHUB_TOKEN
-~~~
-
-Secrets are referenced inside GitHub Actions using:
-
-~~~text
-${{ secrets.DOCKERHUB_USERNAME }}
-~~~
-
-and:
-
-~~~text
-${{ secrets.DOCKERHUB_TOKEN }}
-~~~
-
-No Docker Hub credentials are stored directly in the workflow file.
-
----
-
 # 📦 Docker Hub
 
 The Docker image is available on Docker Hub:
@@ -610,38 +579,6 @@ Run tests with coverage:
 ~~~bash
 python -m pytest --cov=. --cov-report=term-missing
 ~~~
-
----
-
-# 📈 Project Results
-
-The project successfully demonstrates:
-
--  Machine Learning-based expense categorization 
--  Dual database integration 
--  REST API development 
--  Automated software testing 
--  Test coverage analysis 
--  Docker containerization 
--  Docker Compose 
--  CI/CD automation 
--  Secure credential management 
--  Automated Docker image deployment 
-
----
-
-# 🔮 Future Enhancements
-
-Possible future improvements include:
-
--  📊 Expense visualization dashboard 
--  🔐 User authentication 
--  📱 Responsive frontend 
--  📈 Spending trend analysis 
--  💡 Personalized spending insights 
--  🧠 Improved ML model with more training data 
--  ☁️ Cloud deployment 
--  🔔 Budget and expense alerts 
 
 ---
 
